@@ -74,7 +74,7 @@ namespace NameCode
             string b = Console.ReadLine();
             if (b == "y")
             {
-                Console.WriteLine($"Saving '{name}' to the database.");
+                Console.WriteLine($"Writing '{name}'.");
                 WriteToFile(name);
             }
             else
