@@ -1,23 +1,22 @@
 ﻿using System;
 using GameInterface;
-using System.Collections;
 using System.Collections.Generic;
+using Extends;
 
 namespace GuessMyNumber
 {
+
     class GuessingGame : IGame
     {
-        public static void Main(string[] args)
-        {
-            GuessingGame game = new GuessingGame();
-            game.Game();
-        }
+
+        public static List<int> whatWrong = new List<int>();
+
         public void Game()
         {
             Random rand = new Random();
             Console.WriteLine("Guess a random number from 0 to 10!");
             int ranNum = rand.Next(11);
-            List<int> whatWrong = new List<int>();
+
 
             do
             {
@@ -43,29 +42,14 @@ namespace GuessMyNumber
                     else
                     {
                         Console.WriteLine("You guessed correctly!");
-                        if (whatWrong.Count > 3)
-                        {
-                            Console.WriteLine($"You got {whatWrong.Count} wrong! You lose.");
-                            Console.Write($"The numbers you guess were ");
-                            for(int w = 0; w < whatWrong.Count; w++)
-                            {
-                                Console.Write($"{whatWrong[w]} ");
-                            }
-                            Console.Write(".");
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            Console.WriteLine($"You got {whatWrong.Count} wrong! You win!");
-                            Console.Write($"The numbers you guessed were ");
-                            foreach(int w in whatWrong)
-                            {
-                                Console.Write($"{w} ");
-                            }
-                            Console.Write(".");
-                            Console.WriteLine();
-                        }
-                        
+
+                        Extension e = new Extension();
+
+                        e.endGame(
+                            $"You lost, you got {whatWrong.Count} correct",
+                            whatWrong.Count
+                        );
+
                         Console.WriteLine("Do You want to play again? [y/n]");
                         string read = Console.ReadLine();
                         string response = read.Substring(0, 1).ToLower();
