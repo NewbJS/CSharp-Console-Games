@@ -23,8 +23,10 @@ namespace NameCode
             else
             {
                 Console.WriteLine("Exited.");
+
             }
         }
+
         private static void WriteToFile(string whatTo)
         {
             StreamWriter writer = new StreamWriter(fileName, true);
@@ -42,44 +44,61 @@ namespace NameCode
                     writer.WriteLine("JUST CREATED");
                 }
             }
-            
+
             string[] lines = File.ReadAllLines(fileName);
+
+            if (name == "")
+            {
+                Console.WriteLine("You didn't enter a name. Your name will be 'DEFAULT'.");
+                name = "DEFAULT";
+            }
 
             IEnumerable<string> match =
                 from l in lines
                 where l == name
                 select l;
 
-        
-                int matches = 0;
-                foreach (string m in match)
-                {
-                    matches++;
-                }
-                switch(matches)
+
+            int matches = 0;
+            foreach (string m in match)
+            {
+                matches++;
+            }
+            if (name.ToUpper() != "DEFAULT")
+            {
+                switch (matches)
                 {
 
                     case 0:
-                
+
                         Console.WriteLine("Your name is unique! There are no matches!");
                         break;
 
                     case 1:
-                
+
                         Console.WriteLine($"Your name is not unique! There is {matches} match.");
                         break;
-               
+
                     default:
                         Console.WriteLine($"Your name is not unique! There are {matches} matches.");
                         break;
                 }
-            
+            }
+            else
+            {
+                Console.WriteLine("Your name is 'DEFAULT', it does not count.");
+            }
+
             Console.WriteLine("Do you want to save your name? [y/n]");
             string b = Console.ReadLine();
-            if (b == "y")
+            if (b == "y" && name.ToUpper() != "DEFAULT")
             {
                 Console.WriteLine($"Writing '{name}'.");
                 WriteToFile(name);
+            }
+            else if (name.ToUpper() == "DEFAULT")
+            {
+                Console.WriteLine("Cannot write 'DEFAULT'.");
             }
             else
             {
