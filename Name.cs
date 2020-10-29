@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
+
 namespace NameCode
 {
     class Name
@@ -41,35 +42,38 @@ namespace NameCode
                     writer.WriteLine("JUST CREATED");
                 }
             }
+            
             string[] lines = File.ReadAllLines(fileName);
-
 
             IEnumerable<string> match =
                 from l in lines
                 where l == name
                 select l;
 
-            if (match == null)
-            {
-                Console.WriteLine("Your name is unique!");
-            }
-            else
-            {
+        
                 int matches = 0;
                 foreach (string m in match)
                 {
                     matches++;
                 }
-                if (matches == 1)
+                switch(matches)
                 {
-                    Console.WriteLine($"Your name is not unique! There is {matches} match.");
-                }
-                else
-                {
-                    Console.WriteLine($"Your name is not unique! There are {matches} matches.");
 
+                    case 0:
+                
+                        Console.WriteLine("Your name is unique! There are no matches!");
+                        break;
+
+                    case 1:
+                
+                        Console.WriteLine($"Your name is not unique! There is {matches} match.");
+                        break;
+               
+                    default:
+                        Console.WriteLine($"Your name is not unique! There are {matches} matches.");
+                        break;
                 }
-            }
+            
             Console.WriteLine("Do you want to save your name? [y/n]");
             string b = Console.ReadLine();
             if (b == "y")
